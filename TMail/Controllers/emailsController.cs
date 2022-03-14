@@ -38,7 +38,7 @@ namespace TMail.Controllers
                 .FirstOrDefaultAsync(m => m.id == id);
             if (email == null)
             {
-                return NotFound();
+                return View();
             }
 
             return View(email);

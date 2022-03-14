@@ -15,79 +15,108 @@
 </style>
 <div>
 
-    <a class="btn btn-info" href="~/emails/Index?para=@User.Identity.Name"><i class="fa fa-chevron-left"></i></a>
-    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@Model.id"><i class="fa fa-trash-o"></i></a>
-
-    
-    <hr />
-    <h4>@Model.asunto
-    </h4>
-    <hr />
-    <b>
-        @{
-            var de = "";
-            foreach (var user in Model.de)
-            {
-                if (user != '@')
-                    de = de + user;
-                else
-                    goto salir;
-            }
-        salir:
-        }
-        @de <span class="alert">
-            <span aria-hidden="true">&lt;</span>@Model.de<span aria-hidden="true">&gt;</span>
-        </span>
-        
-        <span class="float-right">
-            @{
-
-                Model.fecha.ToString("dd-MM-yyyyy");
-            }
-            <a class="btn btn-success" asp-action="Create"> <i class="fa fa-share"></i> Responder</a>
-        </span>
-        @{ 
-            var para = "";
-            foreach(var t in User.Identity.Name)
-            {
-                if (t != '@')
-                    para = para + t;
-                else
-                    goto salirp;
-            }
-        salirp:
-            }
-        }
-    <p class="alert">Para: @para</p>
-    </b>
-    <hr />
-    <p>
-        @Model.cuerpo
-    </p>
-    <hr />
 
     @{
-        int n1, n2;
-        if (Model.id - 1 == 0)
+        if (Model != null)
         {
-            n1 = Model.id + 1;
-            <div class="btn-group btn-group-sm float-right" role="group" aria-label="">
-                <a class="btn btn-info" asp-controller="emails" asp-route-id="@Model.id">0</a>
-                <a class="btn btn-info" asp-controller="emails" asp-route-id="@n1">@n1<i class="fa fa-chevron-right"></i></a>
-            </div>
-            }
-            else
-            {
-                n1 = Model.id - 1;
-                n2 = Model.id + 1;
-            <div class="btn-group btn-group-sm float-right" role="group" aria-label="">
-                <a class="btn btn-info" asp-controller="emails" asp-route-id="@n1"><i class="fa fa-chevron-left"></i>@n1</a>
-                <a class="btn btn-info" asp-controller="emails" asp-route-id="@n2">@n2<i class="fa fa-chevron-right"></i></a>
-            </div>
+            <a class="btn btn-info" href="~/emails/Index?para=@User.Identity.Name"><i class="fa fa-chevron-left"></i></a>
+            <a class="btn btn-danger" asp-action="Delete" asp-route-id="@Model.id"><i class="fa fa-trash-o"></i></a>
+
+            <hr />
+            <h4>
+                @Model.asunto
+            </h4>
+            <hr />
+            <b>
+                @{
+                    var de = "";
+                    foreach (var user in Model.de)
+                    {
+                        if (user != '@')
+                            de = de + user;
+                        else
+                            goto salir;
+                    }
+                salir:
+                }
+                @de <span class="alert">
+                    <span aria-hidden="true">&lt;</span>@Model.de<span aria-hidden="true">&gt;</span>
+                </span>
+
+                <span class="float-right">
+                    @{
+
+                        Model.fecha.ToString("dd-MM-yyyyy");
+                    }
+                    <a class="btn btn-success" asp-action="Create"> <i class="fa fa-share"></i> Responder</a>
+                </span>
+                @{
+                    var para = "";
+                    foreach (var t in User.Identity.Name)
+                    {
+                        if (t != '@')
+                            para = para + t;
+                        else
+                            goto salirp;
+                    }
+                salirp:
+                }
+                }
+                <p class="alert">Para: @para</p>
+            </b>
+            <hr />
+            <p>
+                @Model.cuerpo
+            </p>
+
+
+            <hr />
+
+        }
+        else
+        {
+            <a class="btn btn-info" href="~/emails/Index?para=@User.Identity.Name"><i class="fa fa-chevron-left"></i></a>
+
+            <hr />
+            <h1>No tienes mas correos que leer!</h1>
+            <hr />
         }
     }
+    <div>
+        @{
+            int n1, n2;
+            if (Model != null)
+            {
+                if (Model.id - 1 == 0)
+                {
+                    n1 = Model.id + 1;
+                    <div class="btn-group btn-group-sm float-right" role="group" aria-label="">
+                        <a class="btn btn-info" asp-controller="emails" asp-route-id="@Model.id">0</a>
+                        <a class="btn btn-info" asp-controller="emails" asp-route-id="@n1">@n1<i class="fa fa-chevron-right"></i></a>
+                    </div>
+                }
+                else
+                {
+                    n1 = Model.id - 1;
+                    n2 = Model.id + 1;
+                    <div class="btn-group btn-group-sm float-right" role="group" aria-label="">
+                        <a class="btn btn-info" asp-controller="emails" asp-route-id="@n1"><i class="fa fa-chevron-left"></i>@n1</a>
+                        <a class="btn btn-info" asp-controller="emails" asp-route-id="@n2">@n2<i class="fa fa-chevron-right"></i></a>
+                    </div>
+                }
+            }
+            if (Model == null)
+            {
 
-</div>
-<div>
-   
-</div>
+                <div class="btn-group btn-group-sm float-right" role="group" aria-label="">
+                    <a class="btn btn-info" asp-controller="emails"><i class="fa fa-chevron-left"></i></a>
+                    <a class="btn btn-info" href="#">-<i class="fa fa-chevron-right"></i></a>
+                </div>
+            }
+
+        }
+
+    </div>
+    <div>
+
+    </div>
