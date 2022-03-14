@@ -3,28 +3,26 @@
 @{
     ViewData["Title"] = "Create";
 }
+<script src="//cdn.ckeditor.com/4.17.2/standard/ckeditor.js"></script>
 
 <h1>Create</h1>
 
 <h4>email</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-12">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="de" class="control-label"></label>
-                <input asp-for="de" class="form-control" />
-                <span asp-validation-for="de" class="text-danger"></span>
+                <input asp-for="de" type="hidden" value="@User.Identity.Name">
             </div>
             <div class="form-group">
-                <label asp-for="para" class="control-label"></label>
+                Para:
                 <input asp-for="para" class="form-control" />
                 <span asp-validation-for="para" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="fecha" class="control-label"></label>
-                <input asp-for="fecha" class="form-control" />
+                <input asp-for="fecha" type="hidden" value="@DateTime.Now.ToString("yyyy-MM-dd")"/>
                 <span asp-validation-for="fecha" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -33,6 +31,7 @@
                 <span asp-validation-for="asunto" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <!--textarea asp-for="cuerpo" id="cuerpo" class="ckeditor" name="cuerpo" rows="200"></textarea>-->
                 <label asp-for="cuerpo" class="control-label"></label>
                 <input asp-for="cuerpo" class="form-control" />
                 <span asp-validation-for="cuerpo" class="text-danger"></span>
@@ -47,7 +46,11 @@
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
-
+<script>
+    $(document).ready(function () {
+        CKEDITOR.replace('cuerpo');
+    });
+</script>
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
