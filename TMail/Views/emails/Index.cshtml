@@ -1,0 +1,60 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+@model IEnumerable<TMail.Models.email>
+
+@{
+    ViewData["Title"] = "Index";
+}
+<style>
+    a {
+        text-decoration: none;
+    }
+</style>
+<h1>Bandeja de Entrada</h1>
+
+<p>
+    
+    <a class="btn btn-primary" asp-action="Create"><i class="fa fa-plus"></i> Nuevo Mensaje</a>
+</p>
+
+<table class="table">
+    <tbody>
+        @foreach (var item in Model)
+        {
+
+            <tr style="border: 1px solid black; border-radius: 15px;">
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.de)
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.id">
+                        <b>@Html.DisplayFor(modelItem => item.asunto)</b> -
+                        @{
+                            int n1 = 0;
+                            var final = "";
+                            foreach (var cuerpod in item.cuerpo)
+                            {
+                                if (n1 < 30)
+                                {
+                                    final = final + cuerpod;
+                                }
+                                n1++;
+                            }
+                            final += "...";
+                        }
+                        @final
+                    </a>
+                </td>
+                <td>
+                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.id"><i class="fa fa-trash-o"></i></a>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.fecha)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
