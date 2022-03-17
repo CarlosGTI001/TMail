@@ -22,6 +22,7 @@ namespace TMail.Models
         [DataType(DataType.Date)]
         public DateTime fecha { get; set; }
         public string asunto { get; set; }
+        [Column(TypeName = "ntext")]
         public string cuerpo { get; set; }
     }
 }
